@@ -18,7 +18,7 @@ This reads the file `webhooks-subscription-definition.json` from the root of you
 ### Input Parameter
 | input | required | default | description |
 |-------|----------|---------|-------------|
-|subscription_file|no|`webhooks-subscription-definition.json`|The location of the file that contains the definition of the subscription that is used as the input for this action.|
+|subscription_source|no|`webhooks-subscription-definition.json`|The location for subscriptions. The default value is considered a file path, but if is a directory path, then all the files in that directory are processed by this action.|
 |environment|yes|test|The environment to provision to, e.g. test or prod|
 |region|no|-|The region to provision to, e.g. westeurope or australiaeast. Leave empty to provision to all regions.|
  

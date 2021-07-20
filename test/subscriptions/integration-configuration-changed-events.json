@@ -1,0 +1,36 @@
+{
+  "deliveryType": "PUSH",
+  "identifier": "integration-configuration-changed-events",
+  "tagSets": [
+    [
+      "integrations",
+      "CONFIGURATION_CREATED"
+    ],
+    [
+      "integrations",
+      "CONFIGURATION_UPDATED"
+    ],
+    [
+      "integrations",
+      "CONFIGURATION_DELETED"
+    ],
+    [
+      "integrations",
+      "CONFIGURATION_ACTIVATED"
+    ],
+    [
+      "integrations",
+      "CONFIGURATION_DEACTIVATED"
+    ],
+    [
+      "integrations",
+      "CONNECTOR_CREATED"
+    ]
+  ],
+  "targetUrl": "https://local-eam.leanix.net/services/integration-api/v1/webhooks/configuration-changes"
+  "targetMethod": "POST",
+  "authorizationHeader": "",
+  "ignoreError": false,
+  "workspaceConstraint": "ANY",
+  "payloadMode": "DEFAULT"
+}

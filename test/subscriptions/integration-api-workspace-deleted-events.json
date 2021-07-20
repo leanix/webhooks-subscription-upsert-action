@@ -1,0 +1,16 @@
+{
+  "deliveryType": "PUSH",
+  "identifier": "integration-api-workspace-deleted-events",
+  "tagSets": [
+    [
+      "MTM",
+      "WORKSPACE_DELETE"
+    ]
+  ],
+  "targetUrl": "https://local-eam.leanix.net/services/integration-api/v1/webhooks/workspaceDeleted",
+  "targetMethod": "POST",
+  "authorizationHeader": "superSecret",
+  "ignoreError": false,
+  "workspaceConstraint": "ANY",
+  "payloadMode": "WRAPPED_EVENT"
+}
