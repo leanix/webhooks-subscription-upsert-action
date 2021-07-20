@@ -1,8 +1,8 @@
 name: 'LeanIX Webhooks Subscription upsert Action'
 description: 'Upsert a subscription in Webhooks for all regions.'
 inputs:
-  subscription_file:
-    description: 'The location of the file that contains the subscription payload that is used as the input for this action.'
+  subscription_source:
+    description: 'The location of the file that contains the subscription payload or directory path from all files are taken.'
     required: true
     default: 'webhooks-subscription-definition.json'
   environment:
