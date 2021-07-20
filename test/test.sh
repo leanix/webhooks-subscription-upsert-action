@@ -7,6 +7,6 @@ docker run --rm \
   -e ARM_CLIENT_ID=$ARM_CLIENT_ID \
   -e ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET \
   -e INPUT_ENVIRONMENT=test \
-  -e INPUT_SUBSCRIPTION_FILE="test/subscriptions" \
+  -e INPUT_SUBSCRIPTION_SOURCE="test/subscriptions" \
   -v $(pwd):/github/workspace \
   leanixacrpublic.azurecr.io/webhooks-subscription-upsert-action:$1

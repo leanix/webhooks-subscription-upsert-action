@@ -42,7 +42,7 @@ for REGION in $REGIONS; do
   if [[ "${REGION}" == "horizon" ]]; then
     # edge-case for horizon
     KEY_VAULT_NAME="lxeastusprod"
-    VAULT_SECRET_KEY="integration-hub-horizon-oauth-secret-horizon-svc"
+    VAULT_SECRET_KEY="integration-api-horizon-oauth-secret-horizon-svc"
     REGION_ID="app-9"
   else
     KEY_VAULT_NAME="lx${REGION}${INPUT_ENVIRONMENT}"
@@ -58,7 +58,7 @@ for REGION in $REGIONS; do
   echo "Using key '${VAULT_SECRET_KEY}' to fetch the SYSTEM user secret from Azure Key Vault '${KEY_VAULT_NAME}' ..."
   VAULT_SECRET_VALUE=$(az keyvault secret show --vault-name ${KEY_VAULT_NAME} --name ${VAULT_SECRET_KEY} | jq -r .value)
 
-  USER_AGENT="integration-hub-connector-register-action"
+  USER_AGENT="integration-api-connector-register-action"
   echo "Fetching oauth token from ${REGION_ID}.leanix.net ..."
   TOKEN=$(curl --silent --request POST \
     --url "https://${REGION_ID}.leanix.net/services/mtm/v1/oauth2/token" \
