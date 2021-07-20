@@ -27,6 +27,7 @@
       "CONNECTOR_CREATED"
     ]
   ],
+  "targetUrl": "https://functions-westeurope-test-sailors.azurewebsites.net/api/integrations-slack-msg?code=tvBzGkAuGt47t671hmLDAawUPmWmwhgksIgZaRqnKGCCbLRB0CtorQ==",
   "targetMethod": "POST",
   "authorizationHeader": "",
   "ignoreError": false,
