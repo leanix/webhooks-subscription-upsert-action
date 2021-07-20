@@ -1,0 +1,17 @@
+name: 'LeanIX Webhooks Subscription upsert Action'
+description: 'Upsert a subscription in Webhooks for all regions.'
+inputs:
+  subscription_source:
+    description: 'The location of the file that contains the subscription payload or directory path from all files are taken.'
+    required: true
+    default: 'webhooks-subscription-definition.json'
+  environment:
+    description: 'The environment to provision to, e.g. test or prod'
+    required: true
+    default: 'test'
+  region:
+    description: 'The region to provision to, e.g. westeurope or australiaeast. Leave empty to provision to all regions.'
+    required: false
+runs:
+  using: 'docker'
+  image: 'docker://leanixacrpublic.azurecr.io/webhooks-subscription-upsert-action:latest'
