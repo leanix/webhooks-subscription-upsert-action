@@ -76,7 +76,11 @@ for REGION in $REGIONS; do
   export SELF_HOST="${REGION_ID}.leanix.net"
   WEBHOOKS_SECRET_KEYNAME="integration-api-webhooks-${INPUT_ENVIRONMENT}-secret"
   echo "Using key '${WEBHOOKS_SECRET_KEYNAME}' to fetch WEBHOOKS_SECRET from Azure key Value: '${KEY_VAULT_NAME}' ..."
-  export WEBHOOKS_SECRET=$(az keyvault secret show --vault-name ${KEY_VAULT_NAME} --name ${WEBHOOKS_SECRET_KEYNAME} | jq -r .value)
+  export WEBHOOKS_SECRET=$(az keyvault secret show --vault-name ${KEY to fetch the SYSTEM user _VAULT_NAME} --name ${WEBHOOKS_SECRET_KEYNAME} | jq -r .value)
+  # azure function url
+  export AZURE_FUNCTION_URL=$(func azure functionapp list-functions $INPUT_AZURE_FUNCTION_APP_NAME --show-keys \
+  | grep $INPUT_AZURE_FUNCTION_NAME \
+  | awk '{print $3}')
 
   for subscription_file in ${NEW_SUBSCRIPTION_FILES} ; do
     # Variable substitution
@@ -87,13 +91,13 @@ for REGION in $REGIONS; do
     echo -e "\nFound provided subscription with identifier ='${SUBSCRIPTION_IDENTIFIER}'"
 
     echo "GET ${WEBHOOKS_BASE_URL}/subscriptions?identifier=${SUBSCRIPTION_IDENTIFIER} ..."
-    SUBSCRIPTION_ID=$(curl --silent --request GET \
+    curl --silent --request GET \
       --url "${WEBHOOKS_BASE_URL}/subscriptions?identifier=${SUBSCRIPTION_IDENTIFIER}" \
       --header "Authorization: Bearer ${TOKEN}" \
       --header "User-Agent: $USER_AGENT" \
-      --header 'Accept: application/json' \
-      | jq -r '.data[0].id' )
-
+      --header 'Accept: application/json' #\
+      #| jq -r '.data[0].id' )
+    exit 1
     if [ "${SUBSCRIPTION_ID}" != "null" -a ! -z "${SUBSCRIPTION_ID}" ] ; then
       echo "Found Subscription. id='${SUBSCRIPTION_ID}' name='${SUBSCRIPTION_IDENTIFIER}'"
       UPSERT_RESULT=$(curl --request PUT --write-out %{http_code} --silent --output /dev/null \
