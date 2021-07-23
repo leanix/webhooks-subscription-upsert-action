@@ -5,6 +5,13 @@ inputs:
     description: 'The location of the file that contains the subscription payload or directory path from all files are taken.'
     required: true
     default: 'webhooks-subscription-definition.json'
+  azure_function_app_name:
+    description: 'The name of the function App that contains the azure_function_name'
+    required: true
+
+  azure_function_name:
+    description: 'The name of the function to be used to substitute its url as AZURE_FUNCTION_URL '
+    required: true
   environment:
     description: 'The environment to provision to, e.g. test or prod'
     required: true
