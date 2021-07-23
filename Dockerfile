@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:ubuntu-latest
 
 # Install azure-cli and some prerequisites
 RUN apt-get update && \
