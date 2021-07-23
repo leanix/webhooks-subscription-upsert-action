@@ -76,11 +76,12 @@ for REGION in $REGIONS; do
   export SELF_HOST="${REGION_ID}.leanix.net"
   WEBHOOKS_SECRET_KEYNAME="integration-api-webhooks-${INPUT_ENVIRONMENT}-secret"
   echo "Using key '${WEBHOOKS_SECRET_KEYNAME}' to fetch WEBHOOKS_SECRET from Azure key Value: '${KEY_VAULT_NAME}' ..."
-  export WEBHOOKS_SECRET=$(az keyvault secret show --vault-name ${KEY to fetch the SYSTEM user _VAULT_NAME} --name ${WEBHOOKS_SECRET_KEYNAME} | jq -r .value)
+  export WEBHOOKS_SECRET=$(az keyvault secret show --vault-name ${KEY_VAULT_NAME} --name ${WEBHOOKS_SECRET_KEYNAME} | jq -r .value)
   # azure function url
   export AZURE_FUNCTION_URL=$(func azure functionapp list-functions $INPUT_AZURE_FUNCTION_APP_NAME --show-keys \
   | grep $INPUT_AZURE_FUNCTION_NAME \
   | awk '{print $3}')
+  echo "Using Function App '${$INPUT_AZURE_FUNCTION_APP_NAME}'  , function name: '${$INPUT_AZURE_FUNCTION_NAME}'"
 
   for subscription_file in ${NEW_SUBSCRIPTION_FILES} ; do
     # Variable substitution
