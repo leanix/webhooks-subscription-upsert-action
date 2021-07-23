@@ -56,7 +56,7 @@ for REGION in $REGIONS; do
   fi
 
   echo "Using key '${VAULT_SECRET_KEY}' to fetch the SYSTEM user secret from Azure Key Vault '${KEY_VAULT_NAME}' ..."
-  VAULT_SECRET_VALUE=$(az keyvault secret show --vault-name ${KEY_VAULT_NAME} --name ${VAULT_SECRET_KEY} | jq -r .value)
+  VAULT_CLIENT_SECRET=$(az keyvault secret show --vault-name ${KEY_VAULT_NAME} --name ${VAULT_SECRET_KEY} | jq -r .value)
 
   USER_AGENT="integration-api-connector-register-action"
   echo "Fetching oauth token from ${REGION_ID}.leanix.net ..."
@@ -65,14 +65,24 @@ for REGION in $REGIONS; do
     --header 'content-type: application/x-www-form-urlencoded' \
     --header "User-Agent: $USER_AGENT" \
     --data client_id=integration-api \
-    --data client_secret=${VAULT_SECRET_VALUE} \
+    --data client_secret=${VAULT_CLIENT_SECRET} \
     --data grant_type=client_credentials \
     | jq -r .'access_token')
 
   WEBHOOKS_BASE_URL="https://${REGION_ID}.leanix.net/services/webhooks/v1"
   ERRORS_COUNTER=0
 
-  for new_subscription_file in ${NEW_SUBSCRIPTION_FILES} ; do
+  #Env variables for substitution.
+  export SELF_HOST="${REGION_ID}.leanix.net"
+  WEBHOOKS_SECRET_KEYNAME="integration-api-webhooks-${INPUT_ENVIRONMENT}-secret"
+  echo "Using key '${WEBHOOKS_SECRET_KEYNAME}' to fetch WEBHOOKS_SECRET from Azure key Value: '${KEY_VAULT_NAME}' ..."
+  export WEBHOOKS_SECRET=$(az keyvault secret show --vault-name ${KEY_VAULT_NAME} --name ${WEBHOOKS_SECRET_KEYNAME} | jq -r .value)
+
+  for subscription_file in ${NEW_SUBSCRIPTION_FILES} ; do
+    # Variable substitution
+    new_subscription_file=${subscription_file}.subst
+    envsubst < $subscription_file > $new_subscription_file
+
     SUBSCRIPTION_IDENTIFIER="$(cat ${new_subscription_file} | jq -r '.identifier')"
     echo -e "\nFound provided subscription with identifier ='${SUBSCRIPTION_IDENTIFIER}'"
 
