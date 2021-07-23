@@ -27,7 +27,7 @@
       "CONNECTOR_CREATED"
     ]
   ],
-  "targetUrl": "https://$SELF_HOST/services/integration-api/v1/webhooks/configuration-changes",
+  "targetUrl": "$AZURE_FUNTION_URL",
   "targetMethod": "POST",
   "authorizationHeader": "$WEBHOOKS_SECRET",
   "ignoreError": false,
