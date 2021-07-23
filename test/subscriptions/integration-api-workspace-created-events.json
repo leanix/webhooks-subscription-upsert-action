@@ -7,9 +7,9 @@
       "WORKSPACE_CREATE"
     ]
   ],
-  "targetUrl": "https://local-eam.leanix.net/services/integration-api/v1/webhooks/workspaceCreated",
+  "targetUrl": "https://$SELF_HOST/services/integration-api/v1/webhooks/workspaceCreated",
   "targetMethod": "POST",
-  "authorizationHeader": "superSecret",
+  "authorizationHeader": "$WEBHOOKS_SECRET",
   "ignoreError": false,
   "workspaceConstraint": "ANY",
   "payloadMode": "WRAPPED_EVENT"

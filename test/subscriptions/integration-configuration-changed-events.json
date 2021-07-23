@@ -27,9 +27,9 @@
       "CONNECTOR_CREATED"
     ]
   ],
-  "targetUrl": "https://local-eam.leanix.net/services/integration-api/v1/webhooks/configuration-changes",
+  "targetUrl": "https://$SELF_HOST/services/integration-api/v1/webhooks/configuration-changes",
   "targetMethod": "POST",
-  "authorizationHeader": "",
+  "authorizationHeader": "$WEBHOOKS_SECRET",
   "ignoreError": false,
   "workspaceConstraint": "ANY",
   "payloadMode": "DEFAULT"
