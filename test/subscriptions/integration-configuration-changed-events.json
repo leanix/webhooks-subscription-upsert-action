@@ -29,7 +29,7 @@
   ],
   "targetUrl": "https://local-eam.leanix.net/services/integration-api/v1/webhooks/configuration-changes",
   "targetMethod": "POST",
-  "authorizationHeader": "",
+  "authorizationHeader": "$WEBHOOKS_SECRET",
   "ignoreError": false,
   "workspaceConstraint": "ANY",
   "payloadMode": "DEFAULT"
