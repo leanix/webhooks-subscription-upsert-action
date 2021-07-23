@@ -81,7 +81,7 @@ for REGION in $REGIONS; do
   export AZURE_FUNCTION_URL=$(func azure functionapp list-functions $INPUT_AZURE_FUNCTION_APP_NAME --show-keys \
   | grep $INPUT_AZURE_FUNCTION_NAME \
   | awk '{print $3}')
-  echo "Using Function App '${$INPUT_AZURE_FUNCTION_APP_NAME}'  , function name: '${$INPUT_AZURE_FUNCTION_NAME}'"
+  echo "Using Function App '${INPUT_AZURE_FUNCTION_APP_NAME}' ,function name: '${INPUT_AZURE_FUNCTION_NAME}'"
 
   for subscription_file in ${NEW_SUBSCRIPTION_FILES} ; do
     # Variable substitution
