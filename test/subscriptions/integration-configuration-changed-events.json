@@ -27,7 +27,7 @@
       "CONNECTOR_CREATED"
     ]
   ],
-  "targetUrl": "$AZURE_FUNTION_URL",
+  "targetUrl": "$AZURE_FUNCTION_URL",
   "targetMethod": "POST",
   "authorizationHeader": "$WEBHOOKS_SECRET",
   "ignoreError": false,
