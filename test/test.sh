@@ -9,6 +9,6 @@ docker run --rm \
   -e INPUT_ENVIRONMENT=test \
   -e INPUT_SUBSCRIPTION_SOURCE="test/subscriptions" \
   -e INPUT_AZURE_FUNCTION_APP_NAME="functions-westeurope-test-sailors" \
-  -e INPUT_AZURE_FUNCTION_NAME="integrations-slack-msg" \
+  -e INPUT_AZURE_FUNCTION_NAME="IntegrationsSlackMsg" \
   -v $(pwd):/github/workspace \
   leanixacrpublic.azurecr.io/webhooks-subscription-upsert-action:$1
