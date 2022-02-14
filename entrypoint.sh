@@ -22,7 +22,7 @@ retrieveAzureFunctionUrl()
 
 
 # The dictionary contains all the available regions
-declare -a REGION_IDS
+declare -A REGION_IDS
 REGION_IDS["westeurope"]="eu"
 REGION_IDS["eastus"]="us"
 REGION_IDS["canadacentral"]="ca"
