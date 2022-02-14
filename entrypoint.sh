@@ -1,13 +1,34 @@
 #!/bin/bash
 set -eo pipefail # http://redsymbol.net/articles/unofficial-bash-strict-mode/
 
+retrieveAzureFunctionUrl()
+{
+  export AZURE_FUNCTION_URL=$(func azure functionapp list-functions $INPUT_AZURE_FUNCTION_APP_NAME --show-keys \
+  | grep $INPUT_AZURE_FUNCTION_NAME -1 \
+  | tail -1 \
+  | awk '{print $3}')
+  echo "Using Function App '${INPUT_AZURE_FUNCTION_APP_NAME}' ,function name: '${INPUT_AZURE_FUNCTION_NAME}'"
+  
+  # check result from call before represents a valid link
+  regex='(https?)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
+  if [[ ! $AZURE_FUNCTION_URL =~ $regex ]]
+  then 
+    echo "Can not resolve valid function url. Resolved url: '${AZURE_FUNCTION_URL}'"
+    exit 1
+  else
+    echo "Resolved function url: '${AZURE_FUNCTION_URL}'"
+  fi
+}
+
+
 # The dictionary contains all the available regions
-declare -A REGION_IDS
+declare -a REGION_IDS
 REGION_IDS["westeurope"]="eu"
 REGION_IDS["eastus"]="us"
 REGION_IDS["canadacentral"]="ca"
 REGION_IDS["australiaeast"]="au"
 REGION_IDS["germanywestcentral"]="de"
+REGION_IDS["switzerlandnorth"]="ch"
 REGION_IDS["horizon"]="horizon" # edge-case for horizon
 
 # The file containing the subscription definition from the calling repository
@@ -77,11 +98,11 @@ for REGION in $REGIONS; do
   WEBHOOKS_SECRET_KEYNAME="integration-api-webhooks-${INPUT_ENVIRONMENT}-secret"
   echo "Using key '${WEBHOOKS_SECRET_KEYNAME}' to fetch WEBHOOKS_SECRET from Azure key Value: '${KEY_VAULT_NAME}' ..."
   export WEBHOOKS_SECRET=$(az keyvault secret show --vault-name ${KEY_VAULT_NAME} --name ${WEBHOOKS_SECRET_KEYNAME} | jq -r .value)
+  
   # azure function url
-  export AZURE_FUNCTION_URL=$(func azure functionapp list-functions $INPUT_AZURE_FUNCTION_APP_NAME --show-keys \
-  | grep $INPUT_AZURE_FUNCTION_NAME \
-  | awk '{print $3}')
-  echo "Using Function App '${INPUT_AZURE_FUNCTION_APP_NAME}' ,function name: '${INPUT_AZURE_FUNCTION_NAME}'"
+  if [ "$INPUT_AZURE_FUNCTION_APP_NAME" != '' ] && [ "$INPUT_AZURE_FUNCTION_NAME" != '' ]; then
+    retrieveAzureFunctionUrl
+  fi
 
   for subscription_file in ${NEW_SUBSCRIPTION_FILES} ; do
     # Variable substitution
