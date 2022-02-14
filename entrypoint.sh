@@ -1,6 +1,5 @@
 #!/bin/bash
 set -eo pipefail # http://redsymbol.net/articles/unofficial-bash-strict-mode/
-set -x
 
 retrieveAzureFunctionUrl()
 {
